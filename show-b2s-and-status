@@ -1,0 +1,22 @@
+/* this query will output your B2s (building blocks) and their current status
+   contributed by reynlds@illinois.edu
+*/
+
+column VENDOR_NAME format A35
+column VENDOR_DESCRIPTION format A70
+column NAME format A50
+column HANDLE format A30
+column DESCRIPTION format A70
+column VERSION format A20
+
+SELECT
+  p.VENDOR_NAME, 
+  p.VENDOR_DESCRIPTION, 
+  p.NAME, 
+  p.HANDLE, 
+  p.DESCRIPTION, 
+  p.AVAILABLE_FLAG, 
+  to_char(p.VERSION_MAJOR) || '.' || 
+  to_char(p.VERSION_MINOR) || '.' || 
+  to_char(p.VERSION_PATCH) AS Version , 
+  p.DTMODIFIED FROM BBLEARN.PLUGINS p

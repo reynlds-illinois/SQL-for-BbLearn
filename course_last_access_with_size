@@ -1,0 +1,15 @@
+-- find courses with last access of a certain date
+-- and show the size of each course in MB
+-- reynlds@illinois.edu
+
+alter session set nls_date_format = 'MM/DD/YYYY';
+SELECT cm.course_id, max(cu.last_access_date)
+--, cm.course_name, cs.size_coursefiles, cs.size_protectedfiles, cs.size_legacyfiles
+, cs.size_total/1024/1024 as Size_MB
+FROM bblearn.course_main cm
+LEFT JOIN bblearn.course_users cu ON cm.pk1 = cu.crsmain_pk1
+JOIN bblearn.course_size cs ON (cm.pk1 = cs.crsmain_pk1)
+--WHERE cm.course_id like '%12020%'
+WHERE cu.last_access_date < '08/01/2016'
+GROUP BY cm.course_id, cs.SIZE_TOTAL
+order by Size_MB

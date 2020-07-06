@@ -1,0 +1,29 @@
+/*
+identify_assessment_types
+reynlds@illinois.edu
+
+This is the type of this record when bbmd_asi_type=3. 
+    1=Multiple Choice
+    2=True/False
+    3=Multiple Answer
+    4=Ordering
+    5=Matching
+    6=Fill In the Blank
+    7=Essay Question
+    8=Numeric
+    9=Calculated
+    10=FileUpload
+    11=HotSpot
+    12=FillintheBlankPlus
+    13=Jumbled sentence
+    14=Quiz Bowl
+    15=LikeRT Scale
+    16=Short Answer
+    17=EitherOr
+*/
+
+select qad.pk1, qad.title, cm.COURSE_ID
+from bblearn.QTI_ASI_DATA qad
+join bblearn.course_main cm ON qad.crsmain_pk1 = cm.pk1
+where qad.bbmd_questiontype = 9   -- <- SEE QUESTION TYPES ABOVE
+AND cm.course_id like '%120201%'

@@ -1,0 +1,8 @@
+-- identify SCORM courses
+-- reynlds@illinois.edu
+
+select cm.course_id, cm.course_name, cc.title
+from bblearn.course_contents cc
+  left join bblearn.course_main cm on cc.crsmain_pk1 = cm.pk1
+	where cc.cnthndlr_handle = 'resource/x-plugin-scormengine'
+  and (cm.course_id like '%2020%' or cm.course_id like '%2019%')

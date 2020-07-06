@@ -1,0 +1,33 @@
+-- show available students that have not yet logged in to the system
+-- reynlds@illinois.edu
+
+select distinct u.email
+FROM BBLEARN.ACTIVITY_ACCUMULATOR aa
+  JOIN BBLEARN.USERS u on aa.user_pk1 = u.pk1
+  JOIN bblearn.course_main cm on aa.course_pk1 = cm.pk1
+  JOIN bblearn.course_users cu on cm.pk1 = crsmain_pk1
+WHERE cm.COURSE_ID like '%120201%'
+  AND cm.available_ind='Y'
+  AND cm.ROW_STATUS='0'
+  AND cu.role = 'S'
+  AND cu.row_status = '0'
+  -- AND u.user_id NOT IN ('bbadmin', 'administrator')
+  AND u.user_id NOT LIKE '%preview%'
+  AND cu.role = 'S'
+  AND u.email is NOT null
+AND u.email NOT IN (select distinct u.email
+        FROM BBLEARN.ACTIVITY_ACCUMULATOR aa
+          JOIN BBLEARN.USERS u on aa.user_pk1 = u.pk1
+          JOIN bblearn.course_main cm on aa.course_pk1 = cm.pk1
+          JOIN bblearn.course_users cu on cm.pk1 = crsmain_pk1
+        WHERE cm.COURSE_ID like '%120201%'
+          AND cm.available_ind='Y'
+          AND cm.ROW_STATUS='0'
+          AND cu.role = 'S'
+          AND cu.row_status = '0'
+          -- AND u.user_id NOT IN ('bbadmin', 'administrator')
+          AND u.user_id NOT LIKE '%preview%'
+          AND cu.role = 'S'
+          AND u.email is NOT null
+          AND aa.timestamp between to_date('03/23/20 12:00:01', 'MM/DD/YY HH24:MI:SS') AND to_date('03/27/20 11:59:59', 'MM/DD/YY HH24:MI:SS') 
+          )

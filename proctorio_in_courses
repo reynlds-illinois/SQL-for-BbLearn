@@ -1,0 +1,32 @@
+-- Finds instances of assessments that are enabled with Proctorio
+-- reynlds@illinois.edu
+
+-- courses/assessments WITH instructors
+select cc.pk1, cc.title, cm.course_id, u.email, cm.course_name
+from bblearn.course_contents cc
+  join bblearn.course_main cm on cc.crsmain_pk1 = cm.pk1
+  join bblearn.course_users cu on cm.pk1 = cu.CRSMAIN_PK1
+  join bblearn.users u on cu.USERS_pk1 = u.PK1
+where cm.course_id like '%120201%'
+  and cc.cnthndlr_handle = 'resource/x-bb-asmt-test-link'
+  and cc.main_data like '%proctorio-oembed%'
+  and cu.role = 'P'
+order by cc.pk1;
+
+-- unique courses
+select distinct cm.course_id
+from bblearn.course_contents cc
+  join bblearn.course_main cm on cc.crsmain_pk1 = cm.pk1
+where cm.course_id like '%120201%'
+  and cc.cnthndlr_handle = 'resource/x-bb-asmt-test-link'
+  and cc.main_data like '%proctorio-oembed%'
+order by cm.course_id;
+
+-- unique tests in courses
+select distinct cc.pk1, cc.TITLE
+from bblearn.course_contents cc
+  join bblearn.course_main cm on cc.crsmain_pk1 = cm.pk1
+where cm.course_id like '%120201%'
+  and cc.cnthndlr_handle = 'resource/x-bb-asmt-test-link'
+  and cc.main_data like '%proctorio-oembed%'
+order by cc.pk1;

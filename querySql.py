@@ -47,11 +47,11 @@ def getEnv(envConfFilePath='/path/to/my/configuration.file'):
 envDict = getEnv()
 
 # create connection cursor
-cursor = connect2Sql(envDict['ic2gprod.db.opendb.user'],
-                     envDict['ic2gprod.db.opendb.pass'],
-                     envDict['ic2gprod.db.opendb.sys'],
-                     envDict['ic2gprod.db.opendb.port'],
-                     envDict['ic2gprod.db.opendb.sid'])
+cursor = connect2Sql(envDict['opendb.user'],
+                     envDict['opendb.pass'],
+                     envDict['opendb.sys'],
+                     envDict['opendb.port'],
+                     envDict['opendb.sid'])
 
 # prompt for SQL input
 inputSql = sqlInput()
@@ -71,7 +71,6 @@ records = len(r)
 print('The search has returned', records, 'results. Here are the first 10: ')
 
 print(headers)
-#print(r[0])
 pprint(r[:10])
 
 cursor.close()

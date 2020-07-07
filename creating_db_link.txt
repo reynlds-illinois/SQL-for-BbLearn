@@ -1,0 +1,16 @@
+1) have Bb whitelist the IP address of your source DB
+
+2) setup the link in SQL developer on your source DB:
+
+    CREATE DATABASE LINK externalDbLabel
+      CONNECT TO opendb_user IDENTIFIED BY openDbUserPassword
+      USING '(DESCRIPTION=
+        (ADDRESS=(PROTOCOL=TCP)(HOST=ipAddress)(PORT=portNumber))
+        (CONNECT_DATA=(SERVICE_NAME=ORACLE)(SID=BBLEARN))
+      )';
+  
+3) statement example including the SID against bblearn:
+
+    select * from bblearn.content_handlers@externalDbLabel
+    
+    Note:  bblearn is the user on the external
